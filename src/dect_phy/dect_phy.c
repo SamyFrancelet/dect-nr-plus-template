@@ -86,7 +86,7 @@ static void pcc(
 {
 	struct phy_ctrl_field_common *header = (struct phy_ctrl_field_common *)hdr->type_1;
 
-	LOG_INF("Received header from device ID %d",
+	LOG_DBG("Received header from device ID %d",
 		header->transmitter_id_hi << 8 |  header->transmitter_id_lo);
 }
 
@@ -103,8 +103,10 @@ static void pdc(const uint64_t *time,
 		const void *data, uint32_t len)
 {
 	/* Received RSSI value is in fixed precision format Q14.1 */
-	LOG_INF("Received data (RSSI: %d.%d): %s",
+	LOG_DBG("Received data (RSSI: %d.%d): %s",
 		(status->rssi_2 / 2), (status->rssi_2 & 0b1) * 5, (char *)data);
+
+	printk("Received: %s (RSSI: %d.%d)\n", (char *)data, (status->rssi_2 / 2), (status->rssi_2 & 0b1) * 5);
 }
 
 /* Physical Data Channel CRC error notification. */
@@ -202,7 +204,7 @@ int dect_phy_deinit()
 {
 	int err;
 
-	LOG_INF("Shutting down");
+	LOG_DBG("Shutting down");
 
 	err = nrf_modem_dect_phy_deinit();
 	if (err) {
@@ -217,6 +219,8 @@ int dect_phy_deinit()
 		LOG_ERR("nrf_modem_lib_shutdown() failed, err %d", err);
 		return err;
 	}
+
+	return 0;
 }
 
 /* Send operation. */

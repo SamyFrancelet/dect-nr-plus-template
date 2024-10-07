@@ -15,12 +15,14 @@ int main()
 	size_t tx_len;
 	uint8_t tx_data[32] = {0};
 
-    LOG_INF("Board: %s, app version: %s", CONFIG_BOARD, APP_VERSION_STRING);
+    // LOG_INF("Board: %s, app version: %s", CONFIG_BOARD, APP_VERSION_STRING);
 
 	uint16_t dev_id;
 	hwinfo_get_device_id((void *)&dev_id, sizeof(dev_id));
 
-	LOG_INF("Device ID: %u (0x%04x)", dev_id, dev_id);
+	// LOG_INF("Device ID: %u (0x%04x)", dev_id, dev_id);
+
+	printk("Device ID: %u (0x%04x)\n", dev_id, dev_id);
 
 	err = dect_phy_init(dev_id);
 	if (err) {
@@ -29,8 +31,8 @@ int main()
 	}
 
 	while (1) {
-		LOG_INF("Transmitting...");
-		size_t tx_len = sprintf(tx_data, "Hello my friend!");
+		LOG_DBG("Transmitting...");
+		size_t tx_len = sprintf(tx_data, "Hello from %u (0x%04x)", dev_id, dev_id);
 		err = dect_phy_transmit(0, tx_data, tx_len);
 		if (err) {
 			LOG_ERR("dect_phy_transmit failed, err %d", err);
@@ -50,7 +52,7 @@ int main()
 		return err;
 	}
 
-	LOG_INF("Exiting...");
+	LOG_DBG("Exiting...");
 
 	return 0;
 }

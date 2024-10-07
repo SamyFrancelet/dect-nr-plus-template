@@ -11,8 +11,9 @@
 #define DECT_PHY_H
 
 int dect_phy_init(const uint16_t device_id);
+int dect_phy_deinit();
 
-int dect_phy_transmit(uint32_t handle, void *data, size_t data_len):
+int dect_phy_transmit(uint32_t handle, void *data, size_t data_len);
 int dect_phy_receive(uint32_t handle);
 
 #endif // DECT_PHY_H
