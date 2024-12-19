@@ -3,6 +3,9 @@ manifest:
     - name: nrfconnect
       url-base: https://github.com/nrfconnect
 
+    - name: samyfrancelet
+      url-base: git@github.com:SamyFrancelet
+
   projects:
     - name: nrf
       repo-path: sdk-nrf
@@ -21,6 +24,10 @@ manifest:
           - lz4
           - lvgl
           - mipi-sys-t
-
+    - name: vlad-dtss
+      remote: samyfrancelet
+      repo-path: vlad-dts
+      revision: main
+      
   self:
     path: app
